@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/goodiebag.css">
+    <title>Goodie Bag Redemption</title>
+</head>
+<body>
+    <nav>
+        <h1>Goodie Bag Redemption</h1>
+    </nav>
+    <main>
+        <section id="redeem">
+            <div class="container">
+                <div id="box" class="box">
+                    <img id="goodiebagimg" src="/images/goodiebag.png" alt="">
+                </div>
+                <img id="redeemedimg" src="/images/redeemed.png" alt="">
+                <button id="redeemButton">Redeem</button>
+            </div>
+            <img class="pinetrees" aria-hidden = "true" src="/images/pinetrees.png" alt="">
+        </section>
+        <section id="footer">
+            <div class="container">
+                <div id="bottomDisclaimer" class="bottomDisclaimer">
+                    Disclaimer: Once you click redeem, you will not be able to receive a goodie bag. Do not click redeem until told to do so by an organiser
+                </div>
+            </div>
+        </section> 
+    </main>
+    <!-- Popup Modal -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <h2 id="DISCLAIMER">IMPORTANT DISCLAIMER!</h2>
+            <p id="disclaimer_p">Confirming will mark the goodie bag as redeemed. <strong>Do not click</strong> confirm without instruction from an organiser of the bettering run. Or you risk not receiving a goodie bag</p>
+            <div class="button_row">
+                <button id="cancel">Cancel</button>
+                <button id="confirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/goodiebag.js"></script>
+</body>
+</html>

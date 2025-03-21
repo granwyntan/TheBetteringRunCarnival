@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Bettering Run</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #1D4D2C, #34A853);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .loading-overlay {
+      position: absolute;
+      inset: 0;
+      background-color: #1D4D2C;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      animation: fadeOut 0.5s 0.5s forwards;
+    }
+
+    .loading-text {
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 500;
+      animation: pulse 1.5s infinite;
+    }
+
+    .login-container {
+      width: 90%;
+      max-width: 28rem;
+      z-index: 10;
+      position: relative;
+    }
+
+    .glass-morphism {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+
+    .login-header {
+      background: rgba(29, 77, 44, 0.9);
+      padding: 1.25rem;
+      text-align: center;
+      color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .login-body {
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .login-title {
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      color: #1a2e35;
+      text-align: center;
+    }
+
+    .login-subtitle {
+      font-size: 0.875rem;
+      color: #64748b;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #334155;
+      margin-bottom: 0.25rem;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid #e2e8f0;
+      transition: all 0.3s;
+    }
+
+    .login-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(29, 78, 44, 0.3);
+      border-color: #1D4E2C;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 0.75rem 0;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      color: white;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .login-button:hover {
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+      transform: translateY(-1px) scale(1.01);
+    }
+
+    .primary-button {
+      background-color: #1D4E2C;
+    }
+
+    .primary-button:hover {
+      background-color: #164022;
+    }
+
+    .secondary-button {
+      background-color: rgba(107, 114, 128, 0.8);
+    }
+
+    .secondary-button:hover {
+      background-color: rgba(107, 114, 128, 0.7);
+    }
+
+    .wave-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      transform: rotate(180deg);
+    }
+
+    .wave-svg {
+      position: relative;
+      display: block;
+      width: calc(140% + 1.3px);
+      height: 112px;
+      animation: wave 15s linear infinite;
+    }
+
+    .shape-fill {
+      fill: rgba(255, 255, 255, 0.12);
+    }
+
+    .second-wave {
+      position: absolute;
+      bottom: -30px;
+      left: 0;
+      width: 100%;
+    }
+
+    .second-wave .wave-svg {
+      width: calc(150% + 1.3px);
+    }
+
+    .second-wave .shape-fill {
+      fill: rgba(255, 255, 255, 0.06);
+    }
+
+    /* Jungle foliage styles */
+    .jungle-foliage {
+      position: absolute;
+      bottom: -60px;
+      left: 0;
+      width: 100%;
+      height: 180px;
+      z-index: 5;
+    }
+
+    .foliage-layer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+    }
+
+    .foliage-middle {
+      bottom: 20px;
+      z-index: 2;
+      opacity: 0.85;
+    }
+
+    .foliage-front {
+      bottom: 40px;
+      z-index: 1;
+      opacity: 0.7;
+    }
+
+    .foliage-fill-dark {
+      fill: #0F331C;
+    }
+
+    .foliage-fill-medium {
+      fill: #195D2F;
+    }
+
+    .foliage-fill-light {
+      fill: #217A3D;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(52, 168, 83, 0.9);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      animation: fadeInOut 3s forwards;
+      z-index: 100;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; pointer-events: auto; }
+      to { opacity: 0; pointer-events: none; }
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translate(-50%, 20px); }
+      15% { opacity: 1; transform: translate(-50%, 0); }
+      85% { opacity: 1; transform: translate(-50%, 0); }
+      100% { opacity: 0; transform: translate(-50%, -10px); }
+    }
+
+    @keyframes wave {
+      0% { transform: translateX(0) translateZ(0) scaleY(1); }
+      50% { transform: translateX(-25%) translateZ(0) scaleY(0.8); }
+      100% { transform: translateX(-50%) translateZ(0) scaleY(1); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading overlay -->
+  <div class="loading-overlay">
+    <div class="loading-text">The Bettering Run</div>
+  </div>
+
+  <!-- Login Box -->
+  <div class="login-container">
+    <div class="glass-morphism">
+      <header class="login-header">
+        <h1>The Bettering Run</h1>
+      </header>
+      <div class="login-body">
+        <h2 class="login-title">Welcome Back</h2>
+        <p class="login-subtitle">Enter your credentials to continue</p>
+        <form>
+          <div class="form-group">
+            <label for="username" class="form-label">User ID</label>
+            <input type="text" id="username" class="login-input" placeholder="Enter your user ID" required>
+          </div>
+          <div class="form-buttons">
+            <button type="button" class="login-button primary-button" onclick="showToast()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                <polyline points="10 17 15 12 10 7"></polyline>
+                <line x1="15" y1="12" x2="3" y2="12"></line>
+              </svg>
+              <span>Login</span>
+            </button>
+            <button type="button" class="login-button secondary-button" onclick="showToast()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 20a6 6 0 0 0-12 0"></path>
+                <circle cx="12" cy="10" r="4"></circle>
+                <circle cx="12" cy="12" r="10"></circle>
+              </svg>
+              <span>Guest Login</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast" style="display: none;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+    </svg>
+    <span>Verification Done</span>
+  </div>
+
+  <!-- Wave background -->
+  <div class="wave-container">
+    <svg class="wave-svg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+    </svg>
+    <div class="second-wave">
+      <svg class="wave-svg" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+      </svg>
+    </div>
+    
+    <!-- Jungle foliage silhouettes -->
+    <div class="jungle-foliage">
+      <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="foliage-layer">
+        <path d="M0,120 L0,80 C30,85 60,75 90,80 C120,85 150,95 180,90 C210,85 240,65 270,60 C300,55 330,65 360,70 C390,75 420,75 450,70 C480,65 510,55 540,55 C570,55 600,65 630,65 C660,65 690,55 720,50 C750,45 780,45 810,50 C840,55 870,65 900,70 C930,75 960,75 990,70 C1020,65 1050,55 1080,50 C1110,45 1140,45 1170,50 C1200,55 1200,60 1200,60 L1200,120 Z" class="foliage-fill-dark"></path>
+      </svg>
+      <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="foliage-layer foliage-middle">
+        <path d="M0,120 L0,90 C20,85 40,90 60,95 C80,100 100,105 120,100 C140,95 160,80 180,75 C200,70 220,75 240,80 C260,85 280,90 300,85 C320,80 340,65 360,60 C380,55 400,60 420,65 C440,70 460,75 480,70 C500,65 520,50 540,45 C560,40 580,45 600,50 C620,55 640,60 660,65 C680,70 700,75 720,70 C740,65 760,50 780,45 C800,40 820,45 840,50 C860,55 880,60 900,55 C920,50 940,35 960,30 C980,25 1000,30 1020,35 C1040,40 1060,45 1080,40 C1100,35 1120,20 1140,15 C1160,10 1180,15 1200,20 L1200,120 Z" class="foliage-fill-medium"></path>
+      </svg>
+      <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="foliage-layer foliage-front">
+        <path d="M0,120 L0,100 C15,95 30,100 45,105 C60,110 75,115 90,110 C105,105 120,90 135,85 C150,80 165,85 180,90 C195,95 210,100 225,95 C240,90 255,75 270,70 C285,65 300,70 315,75 C330,80 345,85 360,80 C375,75 390,60 405,55 C420,50 435,55 450,60 C465,65 480,70 495,75 C510,80 525,85 540,80 C555,75 570,60 585,55 C600,50 615,55 630,60 C645,65 660,70 675,65 C690,60 705,45 720,40 C735,35 750,40 765,45 C780,50 795,55 810,50 C825,45 840,30 855,25 C870,20 885,25 900,30 C915,35 930,40 945,35 C960,30 975,15 990,10 C1005,5 1020,10 1035,15 C1050,20 1065,25 1080,20 C1095,15 1110,0 1125,-5 C1140,-10 1155,-5 1170,0 C1185,5 1200,10 1200,10 L1200,120 Z" class="foliage-fill-light"></path>
+      </svg>
+    </div>
+  </div>
+
+  <script>
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.style.display = 'flex';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

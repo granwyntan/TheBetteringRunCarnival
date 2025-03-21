@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="css/style.css" />
+    <title>ID Verification | The Bettering Run</title>
+    <style>
+        .id-box {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            margin: 2rem auto;
+            width: fit-content;
+            transition: all 0.3s ease;
+        }
+
+        .verified {
+            background-color: #d4fcd2;
+            border: 2px solid #2ecc71;
+            color: #2ecc71;
+            box-shadow: 0 0 20px 5px rgba(46, 204, 113, 0.5);
+        }
+
+        .unverified {
+            background-color: #fddddd;
+            border: 2px solid #e74c3c;
+            color: #e74c3c;
+            box-shadow: 0 0 10px rgba(231, 76, 60, 0.3);
+        }
+
+        .message {
+            text-align: center;
+            font-size: 1.25rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div id="idDisplay" class="id-box">Loading...</div>
+        <p class="message" id="message">Checking ID status...</p>
+    </main>
+
+    <script>
+        // Simulated verified IDs – replace this with your own logic or backend call
+        const verifiedIDs = ['12345', '67890', '24680'];
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+
+        const idBox = document.getElementById('idDisplay');
+        const message = document.getElementById('message');
+
+        if (id) {
+            const isVerified = verifiedIDs.includes(id);
+            idBox.textContent = `ID: ${id}`;
+            idBox.classList.add(isVerified ? 'verified' : 'unverified');
+            message.textContent = isVerified
+                ? '✅ This ID is verified.'
+                : '❌ This ID is not verified.';
+        } else {
+            idBox.textContent = 'No ID provided.';
+            message.textContent = 'Please access this page with an ID parameter.';
+        }
+    </script>
+</body>
+</html>
